@@ -4,9 +4,8 @@ import nltk
 import urllib.request
 import urllib.request
 from inscriptis import get_text
-from googletrans import Translator
 
-url="https://en.wikipedia.org/wiki/Natural_Language_Toolkit"
+url="https://en.wikipedia.org/wiki/Machine_learning"
 url_to_html=urllib.request.urlopen(url).read().decode('utf-8')
 html_to_text=get_text(url_to_html)
 articulo=html_to_text.replace("[ edit ]","")
@@ -50,9 +49,11 @@ for valor in lista_oraciones:
 import heapq
 oraciones_finales=heapq.nlargest(7,puntajes_oraciones,key=puntajes_oraciones.get)
 
-resumen = ' '.join(oraciones_finales)  
-print(resumen)  
+resumen = ' '.join(oraciones_finales)
+print("\n")
+#print(resumen)
 
-translator = Translator()
-translation = translator.translate(text=resumen,src="es", dest='en')
-print(translation.text)
+from googletrans import Translator
+translator = Translator(service_urls=['translate.googleapis.com'])
+traduccion= translator.translate(resumen, dest='es')
+print(traduccion.text)
